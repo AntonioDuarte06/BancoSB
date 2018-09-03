@@ -13,9 +13,9 @@ public class ContaService {
 
 	@Autowired
 	private ContaRepository repo;
-	
+
 	public Conta find(Integer id) {
 		Optional<Conta> obj = repo.findById(id);
 		return obj.orElse(null);
-		}
+	}
 }

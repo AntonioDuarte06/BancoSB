@@ -87,4 +87,24 @@ public class Conta implements Serializable {
 		return true;
 	}
 
+	public double depositar(double valor) {
+		if (valor > 0) {
+			this.setSaldo(this.getSaldo() + valor);
+		}
+		return valor;
+	}
+
+	public void sacar(double valor) {
+		if (valor < this.getSaldo() && valor > 0) {
+			this.setSaldo(this.getSaldo() - valor);
+		}
+	}
+
+	public void tranferir(Conta destino, double valor) {
+		if (valor > 0) {
+			this.sacar(valor);
+			destino.depositar(valor);
+		}
+	}
+
 }
