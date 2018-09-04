@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.duarte.banco.services.exeptions.ObjectNotFoundException;
 
 @ControllerAdvice
-
 public class ResourceExceptionHandler {
 
 	@ExceptionHandler(ObjectNotFoundException.class)
