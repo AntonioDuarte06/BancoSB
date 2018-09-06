@@ -1,6 +1,7 @@
 package com.duarte.banco.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +30,25 @@ public class ContaResource {
 		Conta obj = service.find(id);
 		return obj;
 	}
+	
+	@GetMapping("/all")
+	public  List<Conta> findAll() {
+		List<Conta> lista = service.findAll();
+		return  lista;
+	}
 
 	@PostMapping
 	public ResponseEntity<Void> create(@RequestBody Conta obj) {
 		obj = service.create(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getNumConta())
-				.toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getNumConta()).toUri();
 
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@PostMapping("/sacar")
+	public ResponseEntity<Void> cashOut(@PathVariable Integer id, @RequestBody Double valor) {
+		service.cashOut(valor);
+		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/{id}")

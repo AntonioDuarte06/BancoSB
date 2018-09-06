@@ -16,7 +16,7 @@ public class Conta implements Serializable {
 	private Integer numConta;
 	private double saldo;
 	private String nome;
-	private double LimiteExtra;
+	private double limiteExtra;
 
 	public Conta() {
 
@@ -27,7 +27,7 @@ public class Conta implements Serializable {
 		this.numConta = numConta;
 		this.saldo = saldo;
 		this.nome = nome;
-		LimiteExtra = limiteExtra;
+		this.limiteExtra = limiteExtra;
 	}
 
 	public Integer getNumConta() {
@@ -43,7 +43,7 @@ public class Conta implements Serializable {
 	}
 
 	public double getLimiteExtra() {
-		return LimiteExtra;
+		return limiteExtra;
 	}
 
 	public void setNumConta(Integer numConta) {
@@ -59,7 +59,7 @@ public class Conta implements Serializable {
 	}
 
 	public void setLimiteExtra(double limiteExtra) {
-		LimiteExtra = limiteExtra;
+		this.limiteExtra = limiteExtra;
 	}
 
 	@Override
@@ -85,26 +85,6 @@ public class Conta implements Serializable {
 		} else if (!numConta.equals(other.numConta))
 			return false;
 		return true;
-	}
-
-	public double depositar(double valor) {
-		if (valor > 0) {
-			this.setSaldo(this.getSaldo() + valor);
-		}
-		return valor;
-	}
-
-	public void sacar(double valor) {
-		if (valor < this.getSaldo() && valor > 0) {
-			this.setSaldo(this.getSaldo() - valor);
-		}
-	}
-
-	public void tranferir(Conta destino, double valor) {
-		if (valor > 0) {
-			this.sacar(valor);
-			destino.depositar(valor);
-		}
 	}
 
 }

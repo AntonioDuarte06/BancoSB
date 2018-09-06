@@ -8,4 +8,5 @@ import com.duarte.banco.domain.Conta;
 @Repository
 public interface ContaRepository extends JpaRepository<Conta, Integer> {
 
+	
 }
