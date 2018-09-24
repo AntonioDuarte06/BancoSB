@@ -15,14 +15,13 @@ public class ContaService {
 
 	@Autowired
 	protected ContaRepository repo;
-	
+
 	@Autowired
 	protected Conta conta;
 
 	public Conta find(Integer id) {
 		Optional<Conta> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Conta.class.getName()));
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Conta.class.getName()));
 	}
 
 	public List<Conta> findAll() {
@@ -43,7 +42,7 @@ public class ContaService {
 		find(id);
 		repo.deleteById(id);
 	}
-	
+
 	public double deposit(Double valor) {
 		if (valor > 0) {
 			conta.setSaldo(conta.getSaldo() + valor);
@@ -52,7 +51,6 @@ public class ContaService {
 	}
 
 	public void cashOut(Double valor) {
-		
 		if (valor < conta.getSaldo() && valor > 0) {
 			conta.setSaldo(conta.getSaldo() - valor);
 		}

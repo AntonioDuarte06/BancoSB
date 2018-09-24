@@ -45,9 +45,10 @@ public class ContaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PostMapping("/sacar")
-	public ResponseEntity<Void> cashOut(@PathVariable Integer id, @RequestBody Double valor) {
-		service.cashOut(valor);
+	@PostMapping("/sacar/{id}")
+	public ResponseEntity<Void> sacar(@PathVariable Integer id, @RequestBody Double valor) {
+		Conta obj = service.find(id);
+		obj.cashOut(valor);
 		return ResponseEntity.noContent().build();
 	}
 
