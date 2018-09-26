@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.duarte.banco.domain.Conta;
 import com.duarte.banco.services.ContaService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @RestController
 @RequestMapping(value = "/contas")
@@ -26,34 +27,35 @@ public class ContaResource {
 	private ContaService service;
 
 	@GetMapping("/{id}")
-	public Conta find(@PathVariable Integer id) {
+	public Conta buscar(@PathVariable Integer id) {
 		Conta obj = service.find(id);
 		return obj;
 	}
 	
 	@GetMapping("/all")
-	public  List<Conta> findAll() {
+	public  List<Conta> buscarTodos() {
 		List<Conta> lista = service.findAll();
 		return  lista;
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> create(@RequestBody Conta obj) {
+	public ResponseEntity<Void> criar(@RequestBody Conta obj) {
 		obj = service.create(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getNumConta()).toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PostMapping("/sacar/{id}")
-	public ResponseEntity<Void> sacar(@PathVariable Integer id, @RequestBody Double valor) {
-		Conta obj = service.find(id);
-		obj.cashOut(valor);
+	@PutMapping("/sacar/{id}")
+	@JsonIgnore
+	public ResponseEntity<Conta> sacar(@PathVariable Integer id, @RequestBody Double valor) {
+		service.cashOut(id, valor);
+		
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Void> uptade(@PathVariable Integer id, @RequestBody Conta obj) {
+	@PutMapping("/update")
+	public ResponseEntity<Void> atualizar(@PathVariable Integer id, @RequestBody Conta obj) {
 		obj.setNumConta(id);
 		obj = service.update(obj);
 
@@ -61,7 +63,7 @@ public class ContaResource {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+	public ResponseEntity<Void> excluir(@PathVariable Integer id) {
 		service.delete(id);
 
 		return ResponseEntity.noContent().build();

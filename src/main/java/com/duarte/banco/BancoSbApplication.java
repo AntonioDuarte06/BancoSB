@@ -23,9 +23,10 @@ public class BancoSbApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		Conta c1 = new Conta(null, 1000, "Antônio Duarte", 1500);
-		Conta c2 = new Conta(null, 3000, "Vilma Rorigues", 2000);
+		Conta c2 = new Conta(null, 2000, "Vilma Rorigues", 2500);
+		Conta c3 = new Conta(null, 3000, "Vilma Rorigues", 3500);
 
-		contaRepo.saveAll(Arrays.asList(c1, c2));
+		contaRepo.saveAll(Arrays.asList(c1, c2, c3));
 
 	}
 }
