@@ -17,7 +17,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.duarte.banco.domain.Conta;
 import com.duarte.banco.services.ContaService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @RestController
 @RequestMapping(value = "/contas")
@@ -47,11 +46,17 @@ public class ContaResource {
 	}
 	
 	@PutMapping("/sacar/{id}")
-	@JsonIgnore
-	public ResponseEntity<Conta> sacar(@PathVariable Integer id, @RequestBody Double valor) {
+	public Conta sacar(@PathVariable Integer id, @RequestBody Double valor) {
 		service.cashOut(id, valor);
 		
-		return ResponseEntity.noContent().build();
+		return service.find(id);
+	}
+	
+	@PutMapping("/depositar/{id}")
+	public Conta depositar (@PathVariable Integer id, @RequestBody Double valor){
+		service.deposit(id, valor);
+		
+		return service.find(id);
 	}
 
 	@PutMapping("/update")
