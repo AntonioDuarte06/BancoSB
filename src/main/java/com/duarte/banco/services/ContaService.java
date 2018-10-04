@@ -1,5 +1,6 @@
 package com.duarte.banco.services;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,15 +47,15 @@ public class ContaService {
 
 		if (valor > 0 && conta.getSaldo() < 0) {
 			conta.setSaldo(conta.getSaldo() + valor);
-			
+
 			conta.setLimiteExtra(conta.getLimiteExtra() - conta.getSaldo());
-			
-		}else {
+
+		} else {
 			conta.setSaldo(conta.getSaldo() + valor);
 
 		}
 		repo.save(conta);
-		
+
 		return valor;
 	}
 
@@ -67,16 +68,17 @@ public class ContaService {
 		} else if (valor <= conta.getLimiteExtra() && valor > 0) {
 			conta.setSaldo(conta.getSaldo() - valor);
 			conta.setLimiteExtra(conta.getLimiteExtra() - valor);
-			
-		}else {
+
+		} else {
 			System.out.println("Saldo insulficiente!");
 		}
 		repo.save(conta);
 	}
 
-	public void tranfer(int contaOrigem, int contaDestino, Double valor) {
+	public void tranfer(int contaOrigem, int contaDestino, Double valor) throws IOException {
 
 		if (valor > 0) {
+
 			cashOut(contaOrigem, valor);
 
 			deposit(contaDestino, valor);

@@ -1,5 +1,6 @@
 package com.duarte.banco.resources;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -57,6 +58,19 @@ public class ContaResource {
 		service.deposit(id, valor);
 		
 		return service.find(id);
+	}
+	
+	@PutMapping("/transferir/{id}/{idDestino}")
+	public Conta transferir(@PathVariable Integer id, @PathVariable Integer idDestino, @RequestBody Double valor) throws IOException {
+		
+		try{
+			service.tranfer(id, idDestino, valor);
+		
+		}catch (NullPointerException e) {
+			System.out.println(e);
+		}
+		
+		return  service.find(id);
 	}
 
 	@PutMapping("/update")
